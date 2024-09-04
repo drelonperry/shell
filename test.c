@@ -5,30 +5,30 @@
 #include<unistd.h>
 
 //Function for the built-in commands
-void builtCmds(char **args) 
+void builtCmds(char** args) 
 {
-	if(strcmp(args[0], "exit") == 0)
+	if (strcmp(args[0], "exit") == 0)
 	{
 		exit(0);
 	}
-	else if(strcmp(args[0], "cd") == 0)
+	else if (strcmp(args[0], "cd") == 0)
 	{
 		chdir(args[1]);
 		setenv(args[1], args[1], 1);
 	}
-	else if(strcmp(args[0], "showpid") == 0)
+	else if (strcmp(args[0], "showpid") == 0)
 	{
 		printf("%d\n", getpid());
 	}
 }
 
-int main(int argc, char *argv[]) 
+int main(int argc, char* argv[]) 
 {
 	char input[100];
 	char s[100];
-	char *token;
-	char *args[80];
-	char *dir;
+	char* token;
+	char* args[80];
+	char* dir;
 	int i = 0;
 	int k = 0;
 	int status = 0;
@@ -45,14 +45,14 @@ int main(int argc, char *argv[])
 		//Allocated memory for the arguments.
     		for(i = 0; i < 10; i++)
     		{
-	    		args[i] = (char*)malloc(20*sizeof(char));
+	    		args[i] = (char*)malloc(20 * sizeof(char));
     		}
 
 		//Seperating the arguments into tokens and adding them to the arguments array.
     		token = strtok(input," ");
     		strcpy(args[k++], token);
 
-    		while(token != NULL)
+    		while (token != NULL)
     		{
       			token = strtok(NULL," ");
 
@@ -68,31 +68,32 @@ int main(int argc, char *argv[])
     		pid = fork();
 
 		//If statement if the first argument is a built-in command
-		if(strcmp(args[0], "exit") == 0 || strcmp(args[0], "cd") == 0 || strcmp(args[0], "showpid") == 0)
+		if (strcmp(args[0], "exit") == 0 || strcmp(args[0], "cd") == 0 || strcmp(args[0], "showpid") == 0)
 		{
 			builtCmds(args);
 		}
 
-		if(pid < 0) // Prints if the fork failed
+		if (pid < 0) // Prints if the fork failed
 		{
 			printf("Forking Failed\n");
 		}
-    		else if(pid == 0) //Child Process
+    		else if (pid == 0) //Child Process
     		{
       			if(execvp(args[0], args) < 0)
 		  	{
        				printf("Error: Command could not be executed\n");
 			}
+			
 			exit(0);
    		}
-    		else // Parent Process
+    		else //Parent Process
     		{
       			waitpid(pid, &status, WUNTRACED);
       			input[0] = '\0';
       			k = 0;
       			*args = NULL;
     		}
-		fflush(stdin); 
-  		while(1);
- 	 }
+		
+		fflush(stdin); 	
+ 	 } while(1);
 }
