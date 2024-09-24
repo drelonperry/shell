@@ -1,9 +1,9 @@
 
-test: test.o
-	gcc test.o -o test
+shell: shell.o
+	gcc shell.o -o shell
 
-test.o: test.c
-	gcc -c test.c
+shell.o: shell.c
+	gcc -c shell.c
 
 clean:
-	rm *.o test
+	rm *.o shell

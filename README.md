@@ -5,16 +5,17 @@ exit, cd, showpid, and ls.
 
 Files:
 	Makefile - The Makefile to run the program.
-	test.c - The main program. 
+	shell.c - The main program. 
 
 Instructions to compile: Type make to create the Makefile contents and the executable for the program. 
 
-Instructions for running: Run the program by typing ./test
+Instructions for running: Run the program by typing ./shell
 
 Challenges encountered: While trying to make this program, I encountered the main problem of
 			the error message printing when I try to execute the built-in commands cd and showpid.
 			The two commands do work as intended, but they also get an error message even if they were successful.
-			Another challenge I encountered was with showpid only showing me 2 processes.
+			I was able to fix the problem by moving parts of the code around where the error message only appears
+			if an error was actually encountered.
 
 Sources used:
 	https://www.geeksforgeeks.org/fork-system-call/
